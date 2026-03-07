@@ -1,0 +1,65 @@
+{
+  "name": "annoying-dog",
+  "displayName": "Annoying Dog",
+  "description": "Interactive DELTARUNE animated sprites for your sidebar. Select your favorites, drag them anywhere, and they'll stay exactly where you left them.",
+  "publisher": "Sans",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sans/vscode-annoying-dog.git"
+  },
+  "version": "0.0.2",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "annoyingDog.selectSprites",
+        "title": "Annoying Dog: Select Sprites"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "annoyingDog",
+          "title": "Annoying Dog",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "annoyingDog": [
+        {
+          "type": "webview",
+          "id": "annoyingDog.view",
+          "name": "Viewer"
+        }
+      ],
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "annoyingDog.explorerView",
+          "name": "Annoying Dog"
+        }
+      ]
+    }
+  },
+
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pack": "vsce package",
+    "install-ext": "code --install-extension annoying-dog-0.0.1.vsix"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.1.3",
+    "@vscode/vsce": "^2.19.0"
+  }
+}

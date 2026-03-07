@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Annoying Dog</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: calc(100vw + 24px);
+        max-width: none;
+        font-family: var(--vscode-font-family, sans-serif);
+        font-size: var(--vscode-font-size, 13px);
+        background-color: var(--vscode-sideBar-background, #1e1e1e);
+        color: var(--vscode-sideBar-foreground, #cccccc);
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      .hanger {
+        position: relative;
+        width: 100%;
+        height: 180px;
+      }
+      .dog {
+        display: block;
+        width: 96px;
+        min-width: 96px;
+        height: auto;
+        margin: 0 auto;
+        image-rendering: pixelated;
+      }
+      .dog-container {
+        position: absolute;
+        z-index: 10;
+        cursor: grab;
+        user-select: none;
+      }
+      .dog-container:active {
+        cursor: grabbing;
+      }
+      .spr_dtrapdog {
+        top: 0;
+        right: 48px;
+        transform-origin: top right;
+      }
+
+      .spr_tobydogeat,
+      .spr_dog_walk,
+      .spr_dog_dance,
+      .spr_sleepdog {
+        position: fixed;
+        bottom: 0;
+        transform: translateX(-50%);
+      }
+
+      .spr_tobydogeat {
+        left: 12.5%;
+      }
+      .spr_dogcar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        animation: drive 8s linear infinite;
+      }
+      .spr_sleepdog {
+        left: 87.5%;
+      }
+      .spr_dog_walk {
+        left: 37.5%;
+      }
+      .spr_dog_walk .dog {
+        width: 72px;
+        min-width: 72px;
+        height: auto;
+      }
+      .spr_dog_dance {
+        left: 62.5%;
+      }
+      .spr_dog_climb {
+        position: fixed;
+        bottom: -100px;
+        left: 12px;
+        animation: climb_up 12s linear infinite;
+      }
+
+      .spr_dog_climb .dog {
+        width: 48px;
+        min-width: 48px;
+        height: auto;
+      }
+      .spr_dog_stilts_long {
+        position: fixed;
+        bottom: 0;
+        right: 0px;
+        transition: right 0.2s linear;
+      }
+      .spr_dog_stilts_long .dog {
+        width: 48px;
+        min-width: 48px;
+        height: auto;
+      }
+
+      .spr_tenna_dance_cabbage {
+        position: fixed;
+        bottom: 24%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 0;
+      }
+      .spr_tenna_dance_cabbage .dog {
+        width: 96px;
+        min-width: 96px;
+        height: auto;
+      }
+
+      .spr_joker_dance {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+      .spr_joker_dance .dog {
+        width: 128px;
+        min-width: 128px;
+        height: auto;
+      }
+
+      @keyframes drive {
+        0% {
+          left: -100px;
+          transform: scaleX(1);
+        }
+        45% {
+          left: 100vw;
+          transform: scaleX(1);
+        }
+        50% {
+          left: 100vw;
+          transform: scaleX(-1);
+        }
+        95% {
+          left: -100px;
+          transform: scaleX(-1);
+        }
+        100% {
+          left: -100px;
+          transform: scaleX(1);
+        }
+      }
+
+      @keyframes climb_up {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hanger" aria-hidden="false">
+      <div class="dog-container spr_dtrapdog">
+        <img
+          class="dog"
+          src="spr_dtrapdog/spr_dtrapdog_0.png"
+          alt="dtrap dog"
+        />
+      </div>
+      <div class="dog-container spr_sleepdog">
+        <img
+          class="dog"
+          src="spr_sleepdog/spr_sleepdog_0.png"
+          alt="sleep dog"
+        />
+      </div>
+      <div class="dog-container spr_tobydogeat">
+        <img
+          class="dog"
+          src="spr_tobydogeat/spr_tobydogeat_0.png"
+          alt="eat dog"
+        />
+      </div>
+      <!-- <div class="dog-container spr_dogcar">
+        <img class="dog" src="spr_dogcar/spr_dogcar_0.png" alt="dog car" />
+      </div> -->
+      <div class="dog-container spr_dog_walk">
+        <img class="dog" src="spr_dog_walk/spr_dog_walk_0.png" alt="dog walk" />
+      </div>
+      <div class="dog-container spr_dog_dance">
+        <img
+          class="dog"
+          src="spr_dog_dance/spr_dog_dance_0.png"
+          alt="dog dance"
+        />
+      </div>
+      <div class="dog-container spr_tenna_dance_cabbage">
+        <img
+          class="dog"
+          src="spr_tenna_dance_cabbage/spr_tenna_dance_cabbage_0.png"
+          alt="tenna dance cabbage"
+        />
+      </div>
+      <!-- <div class="dog-container spr_dog_climb">
+        <img class="dog" src="spr_dog_climb_front.png" alt="dog climb" />
+      </div> -->
+      <div class="dog-container spr_joker_dance">
+        <img
+          class="dog"
+          src="spr_joker_dance/spr_joker_dance_0.png"
+          alt="joker dance"
+        />
+      </div>
+    </div>
+    <script>
+      (function () {
+        const vscode =
+          typeof acquireVsCodeApi !== "undefined" ? acquireVsCodeApi() : null;
+
+        // Helper for animations
+        function startAnimation(selector, files, fps) {
+          const img = document.querySelector(selector);
+          if (!img) return;
+          let fi = 0;
+          const interval = 1000 / fps;
+          files.forEach((s) => {
+            const i = new Image();
+            i.src = s;
+          });
+          setInterval(() => {
+            fi = (fi + 1) % files.length;
+            img.src = files[fi];
+          }, interval);
+        }
+
+        // 1. Trap Dog
+        startAnimation(
+          ".spr_dtrapdog .dog",
+          Array.from(
+            { length: 10 },
+            (_, i) => `spr_dtrapdog/spr_dtrapdog_${i}.png`,
+          ),
+          3,
+        );
+
+        // 2. Sleep Dog
+        startAnimation(
+          ".spr_sleepdog .dog",
+          Array.from({ length: 2 }, (_, i) => `spr_sleepdog/spr_sleepdog_${i}.png`),
+          2,
+        );
+
+        // 3. Eat Dog
+        startAnimation(
+          ".spr_tobydogeat .dog",
+          Array.from(
+            { length: 8 },
+            (_, i) => `spr_tobydogeat/spr_tobydogeat_${i}.png`,
+          ),
+          6,
+        );
+
+        // 4. Car Dog
+        startAnimation(
+          ".spr_dogcar .dog",
+          Array.from({ length: 2 }, (_, i) => `spr_dogcar/spr_dogcar_${i}.png`),
+          3,
+        );
+
+        // 5. Walk Dog
+        startAnimation(
+          ".spr_dog_walk .dog",
+          Array.from({ length: 2 }, (_, i) => `spr_dog_walk/spr_dog_walk_${i}.png`),
+          4,
+        );
+
+        // 6. Dance Dog
+        startAnimation(
+          ".spr_dog_dance .dog",
+          Array.from({ length: 4 }, (_, i) => `spr_dog_dance/spr_dog_dance_${i}.png`),
+          5,
+        );
+
+        // 7. Tenna Dance
+        startAnimation(
+          ".spr_tenna_dance_cabbage .dog",
+          Array.from(
+            { length: 93 },
+            (_, i) => `spr_tenna_dance_cabbage/spr_tenna_dance_cabbage_${i}.png`,
+          ),
+          24,
+        );
+
+        // 8. Joker Dance
+        startAnimation(
+          ".spr_joker_dance .dog",
+          Array.from(
+            { length: 8 },
+            (_, i) => `spr_joker_dance/spr_joker_dance_${i}.png`,
+          ),
+          8,
+        );
+
+        // 9. Climb Dog (Flip only)
+        const climbImg = document.querySelector(".spr_dog_climb .dog");
+        if (climbImg) {
+          let flip = false;
+          setInterval(() => {
+            flip = !flip;
+            climbImg.style.transform = flip ? "scaleX(-1)" : "scaleX(1)";
+          }, 1000 / 4);
+        }
+
+        // 10. Stilts (Move)
+        const stiltsImg = document.querySelector(".spr_dog_stilts_long .dog");
+        const stiltsContainer = document.querySelector(".spr_dog_stilts_long");
+        if (stiltsImg && stiltsContainer) {
+          let stfi = 0;
+          let stOffset = 0;
+          const files = Array.from(
+            { length: 6 },
+            (_, i) => `spr_dog_stilts_long/spr_dog_stilts_long_${i}.png`,
+          );
+          files.forEach((s) => {
+            const i = new Image();
+            i.src = s;
+          });
+          setInterval(() => {
+            stfi = (stfi + 1) % files.length;
+            stiltsImg.src = files[stfi];
+            if (stfi % 3 === 0) {
+              stOffset += 8;
+              if (stOffset > window.innerWidth + 100) stOffset = -100;
+              stiltsContainer.style.right = stOffset + "px";
+            }
+          }, 1000 / 5);
+        }
+
+        // Drag and Drop Logic
+        function makeDraggable(element) {
+          let pos1 = 0,
+            pos2 = 0,
+            pos3 = 0,
+            pos4 = 0;
+          element.onmousedown = (e) => {
+            e = e || window.event;
+            e.preventDefault();
+            const rect = element.getBoundingClientRect();
+            const parentRect = element.offsetParent
+              ? element.offsetParent.getBoundingClientRect()
+              : { left: 0, top: 0 };
+            element.style.top = rect.top - parentRect.top + "px";
+            element.style.left = rect.left - parentRect.left + "px";
+            element.style.bottom = "auto";
+            element.style.right = "auto";
+            element.style.transform = "none";
+            if (
+              element.classList.contains("spr_tenna_dance_cabbage") ||
+              element.classList.contains("spr_joker_dance")
+            ) {
+              element.style.transform = "translateX(0)";
+            }
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = () => {
+              document.onmouseup = null;
+              document.onmousemove = null;
+              savePositions();
+            };
+            document.onmousemove = (e) => {
+              e = e || window.event;
+              e.preventDefault();
+              pos1 = pos3 - e.clientX;
+              pos2 = pos4 - e.clientY;
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              if (element.classList.contains("spr_dtrapdog")) {
+                element.style.top = "0px";
+              } else {
+                element.style.top = element.offsetTop - pos2 + "px";
+              }
+              element.style.left = element.offsetLeft - pos1 + "px";
+              if (
+                element.classList.contains("spr_dogcar") ||
+                element.classList.contains("spr_dog_climb")
+              ) {
+                element.style.animation = "none";
+              }
+            };
+          };
+        }
+
+        function savePositions() {
+          if (!vscode) return;
+          const positions = {};
+          document.querySelectorAll(".dog-container").forEach((container) => {
+            const spriteName = Array.from(container.classList).find((c) =>
+              c.startsWith("spr_"),
+            );
+            if (spriteName) {
+              positions[spriteName] = {
+                top: container.style.top,
+                left: container.style.left,
+              };
+            }
+          });
+          vscode.postMessage({ type: "savePositions", positions });
+        }
+
+        // Message Handling
+        window.addEventListener("message", (event) => {
+          const message = event.data;
+          if (message.type === "setVisibleSprites") {
+            const visibleSprites = message.sprites;
+            document.querySelectorAll(".dog-container").forEach((container) => {
+              const spriteName = Array.from(container.classList).find((c) =>
+                c.startsWith("spr_"),
+              );
+              if (spriteName) {
+                container.style.display = visibleSprites.includes(spriteName)
+                  ? "block"
+                  : "none";
+              }
+            });
+          } else if (message.type === "initPositions" && message.positions) {
+            const positions = message.positions;
+            Object.keys(positions).forEach((spriteName) => {
+              const container = document.querySelector(`.${spriteName}`);
+              if (container) {
+                container.style.top = positions[spriteName].top;
+                container.style.left = positions[spriteName].left;
+                container.style.bottom = "auto";
+                container.style.right = "auto";
+                container.style.transform = "none";
+                if (
+                  container.classList.contains("spr_dogcar") ||
+                  container.classList.contains("spr_dog_climb")
+                ) {
+                  container.style.animation = "none";
+                }
+              }
+            });
+          }
+        });
+
+        // Initialize
+        document.querySelectorAll(".dog-container").forEach(makeDraggable);
+
+        if (vscode) {
+          vscode.postMessage({ type: "ready" });
+        }
+      })();
+    </script>
+  </body>
+</html>
